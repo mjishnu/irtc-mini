@@ -6,7 +6,7 @@ A simplified IRCTC-style backend built with **Django REST Framework**, featuring
 
 | Layer          | Technology                         |
 | -------------- | ---------------------------------- |
-| Framework      | Django 5 + Django REST Framework   |
+| Framework      | Django 6 + Django REST Framework   |
 | Auth           | JWT via `djangorestframework-simplejwt` |
 | Primary DB     | MySQL 9 (transactional data)       |
 | Analytics DB   | MongoDB 8 (search logs)            |
