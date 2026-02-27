@@ -1,0 +1,11 @@
+Django
+djangorestframework
+mysqlclient
+django-mongodb-backend
+python-dotenv
+djangorestframework-simplejwt
+pymongo
+django-filter
+gunicorn
+whitenoise
+drf-spectacular
