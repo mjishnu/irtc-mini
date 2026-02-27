@@ -369,6 +369,85 @@ curl http://localhost:8000/api/analytics/top-routes/
 
 ---
 
+### Seed Sample Data
+
+A management command is included to populate the database with sample trains and generate MongoDB search logs:
+
+```bash
+# Seed trains + search logs
+docker exec irtc_web python manage.py seed_data
+
+# Flush existing data and re-seed
+docker exec irtc_web python manage.py seed_data --flush
+```
+
+### MongoDB Log Samples
+
+Every search request to `/api/trains/search/` is logged to MongoDB via middleware. Below are the `search_logs` collection (generated via `seed_data`):
+
+```bash
+# Retrieve logs from MongoDB
+docker exec irtc_mongo mongosh --quiet --eval \
+  "db = db.getSiblingDB('irtc_logs'); printjson(db.search_logs.find().sort({_id:-1}).limit(5).toArray());"
+```
+
+```json
+[
+  {
+    "_id": "69a1be0e6c5567f2e03ad34a",
+    "endpoint": "/api/trains/search/",
+    "source": "",
+    "destination": "",
+    "date": "2026-03-20",
+    "user_id": 1,
+    "execution_time_ms": 13.6,
+    "timestamp": "2026-02-27T15:12:50.571Z"
+  },
+  {
+    "_id": "69a1be0e6c5567f2e03ad349",
+    "endpoint": "/api/trains/search/",
+    "source": "New Delhi",
+    "destination": "Mumbai Central",
+    "date": "2026-03-15",
+    "user_id": null,
+    "execution_time_ms": 18.59,
+    "timestamp": "2026-02-27T14:17:50.571Z"
+  },
+  {
+    "_id": "69a1be0e6c5567f2e03ad348",
+    "endpoint": "/api/trains/search/",
+    "source": "Mumbai Central",
+    "destination": "New Delhi",
+    "date": "",
+    "user_id": 1,
+    "execution_time_ms": 8.3,
+    "timestamp": "2026-02-27T15:41:50.571Z"
+  },
+  {
+    "_id": "69a1be0e6c5567f2e03ad347",
+    "endpoint": "/api/trains/search/",
+    "source": "Chennai",
+    "destination": "Howrah",
+    "date": "",
+    "user_id": null,
+    "execution_time_ms": 29.76,
+    "timestamp": "2026-02-27T14:23:50.571Z"
+  },
+  {
+    "_id": "69a1be0e6c5567f2e03ad346",
+    "endpoint": "/api/trains/search/",
+    "source": "Kolkata",
+    "destination": "New Delhi",
+    "date": "",
+    "user_id": null,
+    "execution_time_ms": 17.83,
+    "timestamp": "2026-02-27T14:26:50.571Z"
+  }
+]
+```
+
+---
+
 ## Endpoint Summary
 
 | Method | Endpoint                      | Auth       | Description                        |
